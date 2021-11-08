@@ -3,6 +3,10 @@ export dtm_ip=192.168.28.100
 export shmm_ip=192.168.1.35
 export cob_shelf=13
 
+if [[ -z ${ROGUE_DIR} ]]; then
+  source /opt/rogue/setup_rogue.sh
+fi
+
 if [[ -z ${COB_HOME} ]]; then
   export COB_HOME="$(dirname ${BASH_SOURCE[0]})"
 fi

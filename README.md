@@ -32,3 +32,7 @@ We use the [SLAC RCE Software Development Kit (SDK)](https://confluence.slac.sta
 This environment script assumes that a version of the SDK has been downloaded
 and unpacked to `${COB_HOME}/sdk`. My setup has a symlink from `sdk` to the version
 unpacked from the tarball.
+
+## Rogue
+- [Long Intro to Rogue by Ryan](https://indico.cern.ch/event/752029/contributions/3114636/attachments/1703930/2744976/ROGUE_Overview.pdf)
+- [Rogue Docs](https://slaclab.github.io/rogue/index.html)
