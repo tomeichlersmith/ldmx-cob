@@ -64,7 +64,7 @@ Again, this is done using tools from the SDK.
 cob_rce_reset ${shmm_ip}/13/<dpm>/<rce>
 ```
 
-Run 'cob_rce_reset' without any arguments to get a printout
+Run `cob_rce_reset` without any arguments to get a printout
 of its help message - there are many shortcuts for specifying
 all DPMs or the DTM without having to know its numbers.
 
@@ -86,11 +86,11 @@ DHCPD configuration
 - Make sure `next-server` is the IP address of cmslab0
 
 Watch Boot of COB component via minicom (either wired or wireless) and interrupt autoboot.
-- Reset to default environment: env default -a
-- Set boot mode to nfs: setenv modeboot nfsboot
-- Persist boot delay: setenv bootdelay
-- Save environment: saveenv
-- Restart component: reset
+- Reset to default environment: `env default -a`
+- Set boot mode to nfs: `setenv modeboot nfsboot`
+- Persist boot delay: `setenv bootdelay`
+- Save environment: `saveenv`
+- Restart component: `reset`
 
 ## Looking at SD Card
 You can still look at the SD Card even when booting from NFS.
@@ -110,14 +110,15 @@ that the COB is in.
 ```
 ssh shmm
 clia deactivate 13
+# wait a few seconds
 clia activate 13
 ```
 
 # Check how RCE was Booted
-You can look at the contents of the /proc/cmdline file to see what the commandline options for 
+You can look at the contents of the `/proc/cmdline` file to see what the commandline options for 
 booting the kernel were. When booted from the SD card, the 'root' option is set to 
-/dev/mmcblk0p1 (the SD card's device point). When booted from NFS, the 'root' option
-is set to /dev/nfs.
+`/dev/mmcblk0p1` (the SD card's device point). When booted from NFS, the 'root' option
+is set to `/dev/nfs`.
 
 # Installing Rogue on RCE NFS
 
@@ -165,7 +166,7 @@ make
 make install
   # finished over the weekend
   
-# add usr/local to list of directories to default link
+# add /usr/local to list of directories to default link
 echo "
   # include libraries installed to /usr/local
   /usr/local/lib

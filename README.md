@@ -17,7 +17,15 @@ source ~/cob/env.sh
 cob-git config --local status.showUntrackedFiles no
 ```
 The environment script defines a helpful valias for the ugly `git` command `cob-git` which
-you can treat like a normal `git`. 
+you can treat like a normal `git`.
+
+I suggest putting something similar to the following lines in your `.bashrc` (or equivalent):
+```
+cob-env() {
+  source $HOME/cob/env.sh
+  unset -f cob-env
+}
+```
 
 ## SLAC RCE SDK
 We use the [SLAC RCE Software Development Kit (SDK)](https://confluence.slac.stanford.edu/display/RPTUSER/SDK+Download+and+Installation) a lot. 
