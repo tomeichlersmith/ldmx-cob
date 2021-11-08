@@ -2,9 +2,7 @@
 # Image Construction
 
 Steps taken to make a bootable DPM/DTM image and notes about 
-necessary changes to the lab infrastructure are kept in 
-
-  /export/cob/rootfs/ldmx/README
+necessary changes to the lab infrastructure are kept in [images.md](images.md).
 
 # Terminology
 
