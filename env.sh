@@ -7,7 +7,7 @@ if [[ -z ${COB_HOME} ]]; then
   export COB_HOME="$(dirname ${BASH_SOURCE[0]})"
 fi
 
-source ${COB_HOME}/cob/V3.4.1/i86-linux-64/tools/envs-sdk.sh || return $?
+source ${COB_HOME}/sdk/i86-linux-64/tools/envs-sdk.sh || return $?
 export PS1="\[$(tput setaf 5)\][cob]\[$(tput sgr0)\] ${PS1}"
 
 reboot_cob_shelf() {
