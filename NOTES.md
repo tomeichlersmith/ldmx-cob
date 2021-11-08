@@ -8,34 +8,24 @@ necessary changes to the lab infrastructure are kept in
 
 # Terminology
 
-  DAQ - Data AQuisition
-  Crate - physical structure holding DAQ electronics
-  Shelf - a single entry in the crate
-  Shelf Manager - board with software to control the entries in the crate as well as supporting infrastructure (like fans)
-    - our shelf manager is a Pigeon Point Shelf Manager
-      https://schroff.nvent.com/sites/g/files/hdkjer281/files/acquiadam/2020-11/ShelfManagerUG_3_7_1_20180515.pdf
-  COB - Cluster On Board, a board filling a shelf in a crate
-  RCE - Reconfigurable Cluster Element
-  DPM - Data Processing Module, each holds two RCEs
-  DTM - Data Transfer Module, interfacing module between DPMs and outside world, has one RCE
-  SDK - Software Development Kit, software/firmware that can be used for our purposes with RCEs
-  bay - One of the connections to a module on the COB
-
-# Login
-
-## COB Components
-- All of the components on the COB have a single user 'root' with password 'root'.
-- The default shell on these components is tcsh
-
-## Shelf Manager
-- The shelf manager has a single user 'root' with the empty password ''.
-- The default shell on the manager is sh
+- DAQ - Data AQuisition
+- Crate - physical structure holding DAQ electronics
+- Shelf - a single entry in the crate
+- Shelf Manager - board with software to control the entries in the crate as well as supporting infrastructure (like fans)
+    - our shelf manager is a [Pigeon Point Shelf Manager](https://schroff.nvent.com/sites/g/files/hdkjer281/files/acquiadam/2020-11/ShelfManagerUG_3_7_1_20180515.pdf)
+- COB - Cluster On Board, a board filling a shelf in a crate
+- RCE - Reconfigurable Cluster Element
+- DPM - Data Processing Module, each holds two RCEs
+- DTM - Data Transfer Module, interfacing module between DPMs and outside world, has one RCE
+- SDK - Software Development Kit, software/firmware that can be used for our purposes with RCEs
+- bay - One of the connections to a module on the COB
 
 # Common Processes
 I have tried to store helpful short-cuts in a short environment script that is pretty portable.
 The command below assume that you have entered this environment.
-
-  source /home/eichl008/cob/env.sh
+```
+source env.sh
+```
 
 ## Watching a Shelf Component Boot
 The normal way to access any of the shelf components is through ssh,
@@ -52,21 +42,27 @@ You will need sudo access on the computer you are using 'minicom' on.
 This can be done for watching the DPMs boot since they are serially connected to the DTM,
 and it requires the DTM to be already booted and accessible via ssh.
 
-  ssh root@${dtm_ip}
-  minicom bay<dpm>.<rce>
+```
+ssh root@${dtm_ip}
+minicom bay<dpm>.<rce>
+```
 
 ## Checking the Status of the COB
 This is done using tools from the RCE SDK provided by SLAC.
 Our COB is in shelf number 13 on the crate.
 
-  cob_dump --rce ${shmm_ip}/13
+```
+cob_dump --rce ${shmm_ip}/13
+```
 
 Boot Codes: https://confluence.slac.stanford.edu/display/RPTUSER/RCE+Boot+Status+Codes
 
 ## Remotely Restarting a COB Component
 Again, this is done using tools from the SDK.
 
-  cob_rce_reset ${shmm_ip}/13/<dpm>/<rce>
+```
+cob_rce_reset ${shmm_ip}/13/<dpm>/<rce>
+```
 
 Run 'cob_rce_reset' without any arguments to get a printout
 of its help message - there are many shortcuts for specifying
@@ -77,7 +73,9 @@ Sometimes you forget which component you are on, the simplest method I've found 
 this out is by using a property of how the COB compoents boot. Currently (as of 10/6/2021),
 they all boot with a specific environment variable.
 
-  HOST=1/13/<dpm>/<rce>
+```
+HOST=1/13/<dpm>/<rce>
+```
 
 The shelf manager does not have this environment variable.
 
@@ -99,17 +97,21 @@ You can still look at the SD Card even when booting from NFS.
 This is important for determining which boot.bin and uboot.env is being used
 during the part of the boot process that is before NFS takes over.
 
-  # on DPM/DTM of interest
-  mkdir /mnt/sdcard
-  mount /dev/mmcblk0p1 /mnt/sdcard/
+```
+# on DPM/DTM of interest
+mkdir /mnt/sdcard
+mount /dev/mmcblk0p1 /mnt/sdcard/
+```
 
 ## Restarting Whole COB
 We can do this from the shelf manager by deactiviating and then reactivating the shelf
 that the COB is in.
 
-  ssh shmm
-  clia deactivate 13
-  clia activate 13
+```
+ssh shmm
+clia deactivate 13
+clia activate 13
+```
 
 # Check how RCE was Booted
 You can look at the contents of the /proc/cmdline file to see what the commandline options for 
@@ -119,52 +121,54 @@ is set to /dev/nfs.
 
 # Installing Rogue on RCE NFS
 
-Rogue building from source docs
-  https://slaclab.github.io/rogue/installing/build.html
+[Rogue building from source docs](https://slaclab.github.io/rogue/installing/build.html)
+
 I chose to do a 'system' install because I think that makes the most sense for our use case.
 
 Command log of what I did.
 
-  ssh bay3.2
-  pacman -Syu cmake
-  pacman-key --init
-  pacman-key --populate
-  pacman-key- --refresh
-  pacman -Sy archlinux-keyring
-    # ctrl-C after stuck in gpg key check loop
-  pacman -Sy cmake
-    # success!
-  pacman -Syu cmake python3 boost bzip2 python-pip git zeromq pyqt5
-    # takes a long time
-  git clone https://github.com/slaclab/rogue.git
-  cd rogue
-  git checkout v5.11.0
-  pip3 install -r pip_requirements.txt
-    # takes a long time, seems to be hanging on 'Installing build dependencies ...'
-    # see error on numpy setup 'Broken toolchain: cannot link a simple C program'
-  pacman -Sy gcc
-  pip3 install -r pip_requirements.txt
-    # hung at same point
-  pip3 install numpy
-    # slow at Building wheel for numpy
-    #   looked at pip_requirements, and looks like code formatting/testing modules, so skipping
-  cmake -B build -S . -DROGUE_INSTALL=system
-    # failed to find builder
-  pacman -Sy make
-  cmake -B build -S . -DROGUE_INSTALL=system
-    # failed to find numpy headers
-  pacman -Sy python-numpy
-  cmake -B build -S . -DROGUE_INSTALL=system
-    # success!
-  cd build
-  make
-    # take a long time probably
-  make install
-    # finished over the weekend
-    
-  # add usr/local to list of directories to default link
-  echo "
-    # include libraries installed to /usr/local
-    /usr/local/lib
-    " >> /etc/ld.so.conf
-  ldconfig
+```
+ssh bay3.2
+pacman -Syu cmake
+pacman-key --init
+pacman-key --populate
+pacman-key- --refresh
+pacman -Sy archlinux-keyring
+  # ctrl-C after stuck in gpg key check loop
+pacman -Sy cmake
+  # success!
+pacman -Syu cmake python3 boost bzip2 python-pip git zeromq pyqt5
+  # takes a long time
+git clone https://github.com/slaclab/rogue.git
+cd rogue
+git checkout v5.11.0
+pip3 install -r pip_requirements.txt
+  # takes a long time, seems to be hanging on 'Installing build dependencies ...'
+  # see error on numpy setup 'Broken toolchain: cannot link a simple C program'
+pacman -Sy gcc
+pip3 install -r pip_requirements.txt
+  # hung at same point
+pip3 install numpy
+  # slow at Building wheel for numpy
+  #   looked at pip_requirements, and looks like code formatting/testing modules, so skipping
+cmake -B build -S . -DROGUE_INSTALL=system
+  # failed to find builder
+pacman -Sy make
+cmake -B build -S . -DROGUE_INSTALL=system
+  # failed to find numpy headers
+pacman -Sy python-numpy
+cmake -B build -S . -DROGUE_INSTALL=system
+  # success!
+cd build
+make
+  # take a long time probably
+make install
+  # finished over the weekend
+  
+# add usr/local to list of directories to default link
+echo "
+  # include libraries installed to /usr/local
+  /usr/local/lib
+  " >> /etc/ld.so.conf
+ldconfig
+```
