@@ -171,3 +171,13 @@ echo "
   " >> /etc/ld.so.conf
 ldconfig
 ```
+
+## Getting pyroque to Work
+Trying to install more of the python dependencies.
+```
+python -m pip install -r pip_requirements.txt
+  # hung on p4p
+python -m pip install sqlalchemy pyserial
+  # successful
+python -m pip install p4p
+```
