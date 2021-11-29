@@ -96,7 +96,7 @@ For this DPM, the status is helpful to look at.
  NOT-FULL     EMPTY  Events ready :   0  Next event size : 101
 ```
 Notice links 0 and 1 have no zero suppression (ZS = 0) and all of the links are enabled (EN = 1).
-The ID number is defined during the execution of `standard` and is `<fpga-id>*100+<link>`.
+The ID number is defined during the execution of `standard` and is `(<fpga-id> << 8) + <link>`.
 This is the status for a "standard" setup. You can get back to the "standard" setup
 by running the `daq` commands `hard_reset`, `standard`, `enable` (in that order).
 
