@@ -52,7 +52,7 @@ Notice that the firmware version is printed. This shows a successful connection 
 This tool opens up a rudimentary terminal with various menus and submenus with commands
 for configuring the chips and aquiring data.
 
-`cob13_dpm_1_0` can be used in place of the IP for dpm 1.0 on cob 13.
+`cob13_dpm1_0` can be used in place of the IP for dpm 1.0 on cob 13.
 
 #### Exiting
 You can leave the tool at anytime by pressing ctrl+C.
