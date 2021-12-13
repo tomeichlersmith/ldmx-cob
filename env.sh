@@ -12,14 +12,13 @@ if [[ -z ${COB_HOME} ]]; then
   export COB_HOME="$(realpath ${COB_HOME})"
 fi
 
-if [[ -d ${COB_HOME}/ldmx-daq ]]; then
-  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq/software/install/lib
-  export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/ldmx-daq/software/install/lib
-fi
-
 if [[ -f ${COB_HOME}/ldmx-daq/software/pflib/Makefile ]]; then
   # we are on Jeremy's branch with the Makefile
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq/software/pflib/lib
+  alias tool='${COB_HOME}/ldmx-daq/software/pflib/tool/pftool.exe'
+else
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq/software/install/lib
+  export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/ldmx-daq/software/install/lib
 fi
 
 source ${COB_HOME}/sdk/i86-linux-64/tools/envs-sdk.sh || return $?
@@ -34,3 +33,4 @@ alias cob-git='git --git-dir=${COB_HOME}/.git --work-tree=${COB_HOME}'
 raw2txt() {
   hexdump -v -e '1/4 "%08x " "\n"' $@
 }
+
