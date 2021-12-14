@@ -7,21 +7,36 @@
 #  page, register, value(in hex)
 
 # Gain_conv, ON_conv, ON_dac_trim, ON_input_dac, ON_pa
-#   old: 0x82
+#   new
 #297, 0, 0x4f
 # 41, 0, 0x4f
+#   old
+297, 0, 0x82
+ 41, 0, 0x82
 # Dacb_cb_conv, ON_rtr, Sw_super_conv
-#   old: 0x83
+#   new
 #297, 1, 0xcf
 # 41, 1, 0xcf
+#   old
+297, 1, 0x83
+ 41, 1, 0x83
 # Dacb_vbi_pa, ON_toa, ON_tot
-#   old: 0xc3
+#   new
 #297, 2, 0x7f
 # 41, 2, 0x7f
+#   old
+297, 2, 0xc3
+ 41, 2, 0xc3
 # En_hyst_tot, Sw_Cf_comp, and Sw_cd
-#   old: 0xe9
-297, 8, 0xa4
- 41, 8, 0xa4
+#   new
+#297, 8, 0xa4
+# 41, 8, 0xa4
+#   old
+297, 8, 0xe9
+ 41, 8, 0xe9
+
+# settings stable after change
+
 # Sw_Cf and Sw_Rf
 #   old: 0x54
 297, 9, 0x1a
