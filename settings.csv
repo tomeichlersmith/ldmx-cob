@@ -1,29 +1,36 @@
 # Two pages corresponding to the two halves of our single HGC ROC
 #   297, 47
 # each register has a handful (2-5) settings associated with it
-# which are "compiled" into a single value
+# which are compiled into a single value
 
 # Columns
 #  page, register, value(in hex)
 
 # Gain_conv, ON_conv, ON_dac_trim, ON_input_dac, ON_pa
-# 297, 0, 0x4f
-#  41, 0, 0x4f
+#   old: 0x82
+#297, 0, 0x4f
+# 41, 0, 0x4f
 # Dacb_cb_conv, ON_rtr, Sw_super_conv
-# 297, 1, 0xcf
-#  41, 1, 0xcf
+#   old: 0x83
+#297, 1, 0xcf
+# 41, 1, 0xcf
 # Dacb_vbi_pa, ON_toa, ON_tot
-# 297, 2, 0x7f
-#  41, 2, 0x7f
+#   old: 0xc3
+#297, 2, 0x7f
+# 41, 2, 0x7f
 # En_hyst_tot, Sw_Cf_comp, and Sw_cd
-297, 8, 0xe9
- 41, 8, 0xe9
+#   old: 0xe9
+297, 8, 0xa4
+ 41, 8, 0xa4
 # Sw_Cf and Sw_Rf
-297, 9, 0x54
- 41, 9, 0x54
+#   old: 0x54
+297, 9, 0x1a
+ 41, 9, 0x1a
 # Delay40, Delay65, and Ref_adc
+#   old: ???
 297,13, 0x48
  41,13, 0x48
 # Delay87, Delay9, ON_ref_adc, and Pol_adc
+#   old: ???
 297,14, 0x4b
  41,14, 0x4b
