@@ -30,8 +30,7 @@ __grabndecode_return__() {
 __grabndecode_deduce_configuration__() {
   # get the directory this source code is in
   # https://stackoverflow.com/a/246128/17617632
-  local _script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-  _script_dir=$(realpath ${_script_dir})
+  local _script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd -P)
 
   export grabndecode_decode_py=${_script_dir}/decode.py
   export grabndecode_plot_py=${_script_dir}/plot.py
