@@ -8,25 +8,25 @@
 
 # Gain_conv, ON_conv, ON_dac_trim, ON_input_dac, ON_pa
 #   new
-#297, 0, 0x4f
-# 41, 0, 0x4f
+297, 0, 0x4f
+ 41, 0, 0x4f
 #   old
-297, 0, 0x82
- 41, 0, 0x82
+#297, 0, 0x82
+# 41, 0, 0x82
 # Dacb_cb_conv, ON_rtr, Sw_super_conv
 #   new
-#297, 1, 0xcf
-# 41, 1, 0xcf
+297, 1, 0xcf
+ 41, 1, 0xcf
 #   old
-297, 1, 0x83
- 41, 1, 0x83
+#297, 1, 0x83
+# 41, 1, 0x83
 # Dacb_vbi_pa, ON_toa, ON_tot
 #   new
-#297, 2, 0x7f
-# 41, 2, 0x7f
+297, 2, 0x7f
+ 41, 2, 0x7f
 #   old
-297, 2, 0xc3
- 41, 2, 0xc3
+#297, 2, 0xc3
+# 41, 2, 0xc3
 # En_hyst_tot, Sw_Cf_comp, and Sw_cd
 #   new
 #297, 8, 0xa4
