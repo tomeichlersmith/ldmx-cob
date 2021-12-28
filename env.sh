@@ -21,7 +21,9 @@ else
   export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/ldmx-daq/software/install/lib
 fi
 
-source ${COB_HOME}/sdk/i86-linux-64/tools/envs-sdk.sh || return $?
+if [[ -d ${COB_HOME}/sdk ]]; then
+  source ${COB_HOME}/sdk/i86-linux-64/tools/envs-sdk.sh
+fi
 export PS1="\[$(tput setaf 5)\][cob]\[$(tput sgr0)\] ${PS1}"
 
 reboot_cob_shelf() {
