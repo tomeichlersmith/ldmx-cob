@@ -1,5 +1,8 @@
 # Decoding and Plotting Raw Data
 
+Originally posted to a [GitHub gist](https://gist.github.com/tomeichlersmith/5af6ef62eac5c0a7ce1a7a456bac72df) but
+moved here for more persistence.
+
 After downloading data taken using `pflib` on `cmslab1`,
 we need to decode it before being able to plot the various quantities of interest.
 Most of this decoding work has already been implemented in ldmx-sw,
