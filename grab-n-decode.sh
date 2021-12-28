@@ -10,8 +10,11 @@ __grabndecode_help__() {
  USAGE:
   grab-n-decode <file> [destination]
 
-  <file> is the path to the raw data file on cmslab1 relative to your home directory.
-  [destination] is an optional directory for where the raw data file, its unpacked data, and the plots should be.
+ ARGUMENTS:
+  file          (required) the path to the raw data file on cmslab1 relative to your home directory on the remote server
+  destination   (optional) directory for where the raw data file, its unpacked data, and the plots should be.
+                 this directory needs to be mounted to the container for decoding and plotting purposes
+                 the current directory is used as the default
 
  CONFIGURATION:
 HELP
