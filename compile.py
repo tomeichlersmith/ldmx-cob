@@ -294,7 +294,7 @@ if __name__ == '__main__' :
             sys.exit(0)
             return FullHelpAction
 
-    parser.add_argument('--full_help', action=FullHelpAction, nargs = 0,
+    parser.add_argument('--full_help', action=FullHelpAction,
             help="Print an extended help message.")
     parser.add_argument('setting_file', type=str, nargs='+', 
             help='One (or more, in order) JSON setting files to compile.')
