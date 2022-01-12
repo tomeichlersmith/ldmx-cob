@@ -1,7 +1,7 @@
 """Compile JSON settings for the HGC ROC into their page/register values
 written to a CSV.
 
-I'm using JSON insteam of YAML because JSON comes with Python.
+I'm using JSON instead of YAML because JSON comes with Python.
 
 Each parameter is given specific bits in (one or more) registers across
 a page. (TO BE CHECKED, pretty sure no settings go across two pages)
@@ -20,7 +20,7 @@ The JSON settings have a two-tier structure:
 }
 ```
 
-The names of the pages and parameteres are copied from the documentation
+The names of the pages and parameters are copied from the documentation
 of the ASIC parameters.
 
 The "Page_Name" strings can be regular expressions to match several
@@ -54,8 +54,6 @@ for applying general rules and then exceptions.
 """
 
 import re
-import builtins
-import traceback
 
 class BitSpec :
     """This class holds the bit specification of a parameter.
@@ -213,7 +211,7 @@ class CompiledSettings :
             'Gain_conv' : 0b0100
         },
         'Reference_Voltage_*' : {
-            'Tot_vref' : 0b0110110000
+            'Tot_vref' : 432 #0b0110110000
         },
     }
 
