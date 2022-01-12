@@ -46,7 +46,7 @@ for applying general rules and then exceptions.
   },
   {
     "Channel_42" : {
-      "Except42" : value2
+      "SameForAllChannels" : new_value_for_42_only
     }
   }
 ]
@@ -72,6 +72,8 @@ class BitSpec :
         the minimum bit that the parameter starts on (0-7)
     n_bits : int or list[int]
         number of bits the parameter spans within this register (1-8)
+    default : int
+        Default value for the parameter as given in the documentation
 
     Attributes
     ----------
@@ -84,7 +86,7 @@ class BitSpec :
         before adding the new one.
     """
 
-    def __init__(self, register, min_bit, n_bits) :
+    def __init__(self, register, min_bit, n_bits, default = 0) :
         if not isinstance(register,list) :
             register = [register]
         for val in register :
@@ -112,6 +114,7 @@ class BitSpec :
         self.mask = [((1 << n) - 1) for n in self.n_bits]
         self.clear = [(mask << min_bit) ^ 0b11111111 
                 for mask, min_bit in zip(self.mask,self.min_bit)]
+        self.default = default
 
     def __iter__(self) :
         """We are our own iterator"""
@@ -168,10 +171,22 @@ class CompiledSettings :
         Number of registers per page on the HGC ROC (16)
     global_analog_lut : dict
         LUT for the Global Analog pages
-        Key: name of parameter, Val: BitSpc for that parameter
+        Key: name of parameter, Val: BitSpec for that parameter
     reference_voltage_lut : dict
         LUT for the Reference Voltage pages
-        Key: name of parameter, Val: BitSpc for that parameter
+        Key: name of parameter, Val: BitSpec for that parameter
+    master_tdc_lut : dict
+        LUT for the Master TDC pages
+        Key: name of parameter, Val: BitSpec for that parameter
+    digital_half_lut : dict
+        LUT for the Digital Half pages
+        Key: name of parameter, Val: BitSpec for that parameter
+    top_lut : dict
+        LUT for the Top page
+        Key: name of parameter, Val: BitSpec for that parameter
+    channel_wise_lut : dict
+        LUT for the Channel (including calib and common) pages
+        Key: name of parameter, Val: BitSpec for that parameter
     name_lut : dict
         LUT for all supported pages
         Key: name of page, Val: tuple(<page number>,<page_lut>)
@@ -183,43 +198,47 @@ class CompiledSettings :
     num_registers_per_page = 16
 
     global_analog_lut = {
-        'ON_dac_trim' : BitSpec(0,0,1),
-        'ON_input_dac' : BitSpec(0,1,1),
-        'ON_conv' : BitSpec(0,2,1),
-        'ON_pa' : BitSpec(0,3,1),
-        'Gain_conv' : BitSpec(0,4,4)
+        'ON_dac_trim' : BitSpec(0,0,1,1),
+        'ON_input_dac' : BitSpec(0,1,1,1),
+        'ON_conv' : BitSpec(0,2,1,1),
+        'ON_pa' : BitSpec(0,3,1,1),
+        'Gain_conv' : BitSpec(0,4,4,0b0100)
         }
     
     reference_voltage_lut = {
-        'Tot_vref' : BitSpec([1,2],[6,0],[2,8]),
+        'Tot_vref' : BitSpec([1,2],[6,0],[2,8],0b0110110000),
         }
+
+    master_tdc_lut = {}
+
+    digital_half_lut = {}
+
+    channel_wise_lut = {}
+
+    top_lut = {}
     
     # docs give us the page name to numbers
     name_lut = {
-        'Global_Analog_0' : (297, global_analog_lut),
-        'Global_Analog_1' : (41,  global_analog_lut),
         'Reference_Voltage_0' : (296, reference_voltage_lut),
+        'Global_Analog_0' : (297, global_analog_lut),
+        #'Master_TDC_0' : (298, master_tdc_lut),
+        #'Digital_Half_0' : (299, digital_half_lut),
         'Reference_Voltage_1' : (40, reference_voltage_lut),
+        'Global_Analog_1' : (41,  global_analog_lut),
+        #'Master_TDC_1' : (42, master_tdc_lut),
+        #'Digital_Half_1' : (43, digital_half_lut),
+        #'Top' : (44,top_lut),
+        #'Channel_0' : (261, channel_wise_lut),
         }
-
-    defaults = {
-        'Global_Analog_*' : {
-            'ON_dac_trim' : 1,
-            'ON_input_dac' : 1,
-            'ON_conv' : 1,
-            'ON_pa' : 1,
-            'Gain_conv' : 0b0100
-        },
-        'Reference_Voltage_*' : {
-            'Tot_vref' : 432 #0b0110110000
-        },
-    }
 
     def __init__(self, named_settings, prepend_defaults = True) :
         self.compiled_settings = {}
 
         if prepend_defaults :
-            named_settings.insert(0, CompiledSettings.defaults)
+            defaults = {}
+            for page, spec in CompiledSettings.name_lut.items() :
+                defaults[page] = { param : spec.default for param, spec in spec[1].items() }
+            named_settings.insert(0, defaults)
 
         for iteration, settings in enumerate(named_settings) :
             print(f'Staring iteration {iteration}')
@@ -283,21 +302,34 @@ if __name__ == '__main__' :
             formatter_class = argparse.RawTextHelpFormatter
             )
 
-    class FullHelpAction(argparse.Action):
-        def __init__(self, nargs = 0, **kwargs):
-            super().__init__(nargs = nargs, **kwargs)
+    def run_then_exit(func) :
+        class RunThenExitAction(argparse.Action):
+            def __init__(self, nargs = 0, **kwargs):
+                super().__init__(nargs = nargs, **kwargs)
+    
+            def __call__(self, parser, args, values, option_string=None):
+                func()
+                sys.exit(0)
+                return RunThenExitAction
 
-        def __call__(self, parser, args, values, option_string=None):
-            print(sys.modules[__name__].__doc__)
-            sys.exit(0)
-            return FullHelpAction
+        return RunThenExitAction
 
-    parser.add_argument('--full_help', action=FullHelpAction,
-            help="Print an extended help message.")
+    def full_help() :
+        print(sys.modules[__name__].__doc__)
+
+    def print_example() :
+        example = { 'Global_Analog_0' : { 'ON_pa' : 0 }}
+        with open('example.json','w') as f :
+            json.dump(example,f,indent=2)    
+
+    parser.add_argument('--full_help', action=run_then_exit(full_help),
+            help="Print an extended help message and exit.")
+    parser.add_argument('--print_example', action=run_then_exit(print_example),
+            help="Print an example JSON file and exit.")
     parser.add_argument('setting_file', type=str, nargs='+', 
             help='One (or more, in order) JSON setting files to compile.')
     parser.add_argument('--output','-o', type=str,
-            help='Path to output file to write compiled settings to.')
+            help='Path to output file to write compiled settings to, default uses the name of the first JSON input file.')
     parser.add_argument('--no_defaults', action='store_true', 
             help='(optional) Don\'t include defaults from documentation in compilation.')
 
