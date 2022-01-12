@@ -236,14 +236,13 @@ class CompiledSettings :
 
         if prepend_defaults :
             defaults = {}
-            for page, spec in CompiledSettings.name_lut.items() :
-                defaults[page] = { param : spec.default for param, spec in spec[1].items() }
+            for page_name, (page,lut) in CompiledSettings.name_lut.items() :
+                defaults[page_name] = { param : spec.default for param, spec in lut.items() }
             named_settings.insert(0, defaults)
 
         for iteration, settings in enumerate(named_settings) :
             print(f'Staring iteration {iteration}')
             for page_regex, page_params in settings.items() :
-                print(f' Compiling pages matching {page_regex}')
                 page_names = [n for n in CompiledSettings.name_lut.keys() 
                         if re.match(page_regex,n)]
 
@@ -310,7 +309,6 @@ if __name__ == '__main__' :
             def __call__(self, parser, args, values, option_string=None):
                 func()
                 sys.exit(0)
-                return RunThenExitAction
 
         return RunThenExitAction
 
@@ -322,16 +320,17 @@ if __name__ == '__main__' :
         with open('example.json','w') as f :
             json.dump(example,f,indent=2)    
 
+    parser.add_argument('setting_file', type=str, nargs='+', 
+            help='One (or more, in order) JSON setting files to compile.')
+    parser.add_argument('--output', type=str,
+            help='Path to output file to write compiled settings to,\n'
+                  'default uses the name of the first JSON input file.')
+    parser.add_argument('--no_defaults', action='store_true', 
+            help='Don\'t include defaults from documentation in compilation.')
     parser.add_argument('--full_help', action=run_then_exit(full_help),
             help="Print an extended help message and exit.")
     parser.add_argument('--print_example', action=run_then_exit(print_example),
             help="Print an example JSON file and exit.")
-    parser.add_argument('setting_file', type=str, nargs='+', 
-            help='One (or more, in order) JSON setting files to compile.')
-    parser.add_argument('--output','-o', type=str,
-            help='Path to output file to write compiled settings to, default uses the name of the first JSON input file.')
-    parser.add_argument('--no_defaults', action='store_true', 
-            help='(optional) Don\'t include defaults from documentation in compilation.')
 
     arg = parser.parse_args()
 
