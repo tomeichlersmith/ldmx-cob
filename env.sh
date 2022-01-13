@@ -21,8 +21,9 @@ if [ "$1" == "dev" ]; then
 else
   # ldmx-daq is Jeremy's (more stable) branch
   #  so it is the default
-  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq/software/pflib/lib
-  alias tool='${COB_HOME}/ldmx-daq/software/pflib/tool/pftool.exe'
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq/software/install/lib
+  export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/ldmx-daq/software/install/lib
+  export PATH=${PATH}${COB_HOME}/ldmx-daq/software/install/bin
   tag='cob'
 fi
 
