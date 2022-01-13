@@ -1,0 +1,11 @@
+addresses
+cshrc
+*.env
+*.txt
+*.raw
+ldmx-daq**
+login
+rce-sdk-V3.4.1.tar.gz
+ArchLinuxARM-zedboard-latest.tar.gz
+sdk
+V3.4.1/
