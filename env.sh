@@ -36,8 +36,6 @@ reboot_cob_shelf() {
   ssh root@${shmm_ip} "clia deactivate ${cob_shelf} && sleep 5 && clia activate ${cob_shelf}"
 }
 
-alias cob-git='git --git-dir=${COB_HOME}/.git --work-tree=${COB_HOME}'
-
 raw2txt() {
   hexdump -v -e '1/4 "%08x " "\n"' $@
 }
