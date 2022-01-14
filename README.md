@@ -1,7 +1,6 @@
 # ldmx-cob
 
 Notes and helper scripts for working with LDMX COBs.
-Meant to be used as a bare repository.
 
 ## Setup
 Define where your `cob` working directory is going to be.
