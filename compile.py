@@ -543,7 +543,7 @@ if __name__ == '__main__' :
     settings_in_memory = []
     for file_name in arg.setting_file :
         with open(file_name) as f :
-            sim = load(f)
+            sim = load(f,Loader=Loader)
 
         if isinstance(sim,list) :
             # assume that list of several iterations
