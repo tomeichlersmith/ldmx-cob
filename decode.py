@@ -8,6 +8,7 @@ parser.add_argument('input_file')
 parser.add_argument('--pause',action='store_true')
 parser.add_argument('--max_events',default=100,type=int)
 parser.add_argument('--num_samples',default=1,type=int,required=True)
+parser.add_argument('--pedestals',default='NO_PEDESTALS',type=str)
 
 arg = parser.parse_args()
 
@@ -121,10 +122,11 @@ p.sequence = [
             ),
         hcal_format.HcalRawDecoder(
             input_name = 'UMNChipSettingsTestRaw', 
-            output_name = 'UMNChipSettingsTestDigis',
+            output_name = 'UMNChipSettingsTestDigis'
             ),
         umn.TestHgcRoc(
-            input_name = 'UMNChipSettingsTestDigis'
+            input_name = 'UMNChipSettingsTestDigis',
+            pedestal_table = arg.pedestals
             )
         ]
 
