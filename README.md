@@ -20,6 +20,18 @@ cob-env() {
 }
 ```
 
+## ldmx-sw Configuration
+The branch of ldmx-sw is called `umn/hgcroc`.
+```
+cd ldmx-sw
+git fetch
+git checkout umn/hgcroc
+cd Hcal
+git checkout umn/hgcroc
+```
+
+The current decoder makes the _hardcoded assumption_ that the FPGA ID is 5.
+
 ## SLAC RCE SDK
 We use the [SLAC RCE Software Development Kit (SDK)](https://confluence.slac.stanford.edu/display/RPTUSER/SDK+Download+and+Installation) a lot. 
 This environment script assumes that a version of the SDK has been downloaded
