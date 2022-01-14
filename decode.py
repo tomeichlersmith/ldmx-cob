@@ -7,6 +7,7 @@ parser = argparse.ArgumentParser(f'ldmx fire {sys.argv[0]}')
 parser.add_argument('input_file')
 parser.add_argument('--pause',action='store_true')
 parser.add_argument('--max_events',default=100,type=int)
+parser.add_argument('--num_samples',default=1,type=int,required=True)
 
 arg = parser.parse_args()
 
@@ -90,6 +91,23 @@ p.outputFiles = [f'{dir_name}/unpacked_{base_name}.root']
 # where the ntuplizing tree will go
 p.histogramFile = f'adc_{base_name}.root'
 
+def num_words(n_samples) :
+    """Num Words in HGC ROC MultiSample Readout 
+      len = 2 # header signal words
+          + 1 # event header
+          + (n+1)//2 # num samples per event divided by 2 rounded up
+          + n*( # num sample packets
+              2 # fpga header
+            + 2 # link count words
+            + 41*2 # actual readout links
+            + 2*7 # unconnected links
+            + 1 # fpga footer
+          )
+          + 2 # event footers
+        = 5 + (n+1)//2 + n*101
+    """
+    return 5 + (n_samples+1)//2 + n_samples*101
+
 # sequence
 #   1. split file into event packets
 #   2. decode event packet into digi collection
@@ -98,7 +116,7 @@ p.sequence = [
         rawio.SingleSubsystemUnpacker(
             raw_file = arg.input_file, 
             output_name = 'UMNChipSettingsTestRaw', 
-            num_bytes_per_event = 4*107, #1051, #1026, #255, 
+            num_bytes_per_event = 4*num_words(arg.num_samples),
             detector_name = 'DNE'
             ),
         hcal_format.HcalRawDecoder(
