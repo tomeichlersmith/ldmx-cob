@@ -16,14 +16,14 @@ if [ "$1" == "dev" ]; then
   # ldmx-daq-dev is my (development) branch
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq-dev/software/install/lib
   export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/ldmx-daq-dev/software/install/lib
-  export PATH=${PATH}${COB_HOME}/ldmx-daq-dev/software/install/bin
+  export PATH=${PATH}:${COB_HOME}/ldmx-daq-dev/software/install/bin
   tag='cob-dev'
 else
   # ldmx-daq is Jeremy's (more stable) branch
   #  so it is the default
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/ldmx-daq/software/install/lib
   export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/ldmx-daq/software/install/lib
-  export PATH=${PATH}${COB_HOME}/ldmx-daq/software/install/bin
+  export PATH=${PATH}:${COB_HOME}/ldmx-daq/software/install/bin
   tag='cob'
 fi
 
