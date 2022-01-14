@@ -8,9 +8,10 @@ __grabndecode_help__() {
  and have a compiled version of ldmx-sw ready to decode the raw data file.
 
  USAGE:
-  grab-n-decode <file> [destination]
+  grab-n-decode <n-samples> <file> [destination]
 
  ARGUMENTS:
+  n-samples     (required) number of samples per event in the raw data file
   file          (required) the path to the raw data file on cmslab1 relative to your home directory on the remote server
   destination   (optional) directory for where the raw data file, its unpacked data, and the plots should be.
                  this directory needs to be mounted to the container for decoding and plotting purposes
@@ -66,8 +67,9 @@ grab-n-decode() {
     return 0 
   fi
 
-  local _file="$1"
-  local _dest="${2:-"."}" #default is current
+  local _nsamples="$1"
+  local _file="$2"
+  local _dest="${3:-"."}" #default is current
 
   local _rc=0
   local _oldpwd=$OLDPWD
@@ -82,7 +84,7 @@ grab-n-decode() {
   # update file name to just the basename since it is downloaded
   _file=$(basename ${_file})
 
-  if ! ldmx fire ${grabndecode_decode_py} ${_file} ; then
+  if ! ldmx fire ${grabndecode_decode_py} --num_samples ${_nsamples} ${_file} ; then
     echo "ERROR: Unable to decode ${_file}."
     __grabndecode_return__ ${_oldpwd}
     return 3
