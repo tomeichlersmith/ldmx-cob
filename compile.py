@@ -1,23 +1,18 @@
-"""Compile JSON settings for the HGC ROC into their page/register values
+"""Compile YAML settings for the HGC ROC into their page/register values
 written to a CSV.
-
-I'm using JSON instead of YAML because JSON comes with Python.
 
 Each parameter is given specific bits in (one or more) registers across
 a page. (TO BE CHECKED, pretty sure no settings go across two pages)
 The parameters are encoded into the register values IN ORDER so that
 general defaults can be set first and then exceptions can be made.
 
-The JSON settings have a two-tier structure:
-```json
-{
-  "Page_Name" : {
-    "Parameter1" : val1,
-    "Parameter2" : val2
-  },
-  "Other_page" : {
-  }
-}
+The YAML settings have a two-tier structure:
+```yaml
+Page_Name:
+  Parameter1: val1
+  Parameter2: val2
+Other_page:
+  Parameter3: val3
 ```
 
 The names of the pages and parameters are copied from the documentation
@@ -25,31 +20,21 @@ of the ASIC parameters.
 
 The "Page_Name" strings can be regular expressions to match several
 different pages. For example, if you wish to apply the same parameter
-settings to all channels, you would use the following JSON snippet.
-```json
-{
-  "Channel_*" : {
-    "SameForAllChannels" : value
-  }
-}
+settings to all channels, you would use the following YAML snippet.
+```yaml
+Channel_*:
+  SameForAllChannels: value
 ```
 
-Each JSON file holding JSON settings can have one of the JSON settings objects 
-or multiple in an ordered list. This second option would be helpful
-for applying general rules and then exceptions.
-```json
-[
-  {
-    "Channel_*" : {
-      "SameForAllChannels" : value
-    }
-  },
-  {
-    "Channel_42" : {
-      "SameForAllChannels" : new_value_for_42_only
-    }
-  }
-]
+If you want multiple rounds of compilation in one file, you will need
+to list them including an extra <tab>.
+```yaml
+-
+  Channel_*:
+    Parameter: default_value
+-
+  Channel_42:
+    Parameter: value_for_42_only
 ```
 """
 
@@ -507,10 +492,15 @@ if __name__ == '__main__' :
     import argparse
     import sys
     import os
-    import json
+    # try to load C-bindings to be faster if possible
+    from yaml import load, dump
+    try:
+        from yaml import CLoader as Loader, CDumper as Dumper
+    except ImportError:
+        from yaml import Loader, Dumper
 
     parser = argparse.ArgumentParser(
-            description="Compile one or more JSON setting objects into a single CSV settings file.",
+            description="Compile one or more YAML setting objects into a single CSV settings file.",
             formatter_class = argparse.RawTextHelpFormatter
             )
 
@@ -530,30 +520,30 @@ if __name__ == '__main__' :
 
     def print_example() :
         example = { 'Global_Analog_0' : { 'ON_pa' : 0 }}
-        with open('example.json','w') as f :
-            json.dump(example,f,indent=2)    
+        with open('example.yaml','w') as f :
+            dump(example,f, Dumper=Dumper)    
 
     parser.add_argument('setting_file', type=str, nargs='+', 
-            help='One (or more, in order) JSON setting files to compile.')
+            help='One (or more, in order) YAML setting files to compile.')
     parser.add_argument('--output', type=str,
             help='Path to output file to write compiled settings to,\n'
-                  'default uses the name of the first JSON input file.')
+                  'default uses the name of the last YAML input file.')
     parser.add_argument('--no_defaults', action='store_true', 
             help='Don\'t include defaults from documentation in compilation.')
     parser.add_argument('--full_help', action=run_then_exit(full_help),
             help="Print an extended help message and exit.")
     parser.add_argument('--print_example', action=run_then_exit(print_example),
-            help="Print an example JSON file and exit.")
+            help="Print an example YAML file and exit.")
 
     arg = parser.parse_args()
 
     if arg.output is None :
-        arg.output = arg.setting_file[0].replace('json','csv')
+        arg.output = arg.setting_file[-1].replace('yaml','csv')
 
     settings_in_memory = []
     for file_name in arg.setting_file :
         with open(file_name) as f :
-            sim = json.load(f)
+            sim = load(f)
 
         if isinstance(sim,list) :
             # assume that list of several iterations
