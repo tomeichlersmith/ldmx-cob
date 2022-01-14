@@ -3,6 +3,7 @@ cshrc
 *.env
 *.txt
 *.raw
+*.csv
 ldmx-daq**
 login
 rce-sdk-V3.4.1.tar.gz
