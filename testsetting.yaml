@@ -1,0 +1,4 @@
+Global_Analog_0:
+  ON_dac_trim: 1
+  ON_input_dac: 0
+
