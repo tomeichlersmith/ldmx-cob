@@ -199,7 +199,7 @@ class CompiledSettings :
         'Ibi_inv' : BitSpec(4,0,2,0),
         'Ibo_inv' : BitSpec(4,2,6,0b001010),
         'Ibi_noinv' : BitSpec(5,0,2,0),
-        'Ib0_noinv' : BitSpec(5,2,6,0b001010),
+        'Ibo_noinv' : BitSpec(5,2,6,0b001010),
         'Ibi_inv_buf' : BitSpec(6,0,2,0b11),
         'Ibo_inv_buf' : BitSpec(6,2,6,0b100110),
         'Ibi_noinv_buf' : BitSpec(7,0,2,0b11),
