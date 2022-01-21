@@ -7,6 +7,12 @@ if [[ -z ${ROGUE_DIR} ]]; then
   source /opt/rogue/setup_rogue.sh || return $?
 fi
 
+if [[ -z ${EUDAQ_DIR} ]]; then
+  export EUDAQ_DIR=$HOME/eudaq
+  export PATH=${PATH}:${EUDAQ_DIR}/bin
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${EUDAQ_DIR}/lib
+fi
+
 if [[ -z ${COB_HOME} ]]; then
   COB_HOME="$(dirname ${BASH_SOURCE[0]})"
   export COB_HOME="$(realpath ${COB_HOME})"
