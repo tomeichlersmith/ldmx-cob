@@ -13,6 +13,13 @@ if [[ -z ${EUDAQ_DIR} ]]; then
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${EUDAQ_DIR}/lib
 fi
 
+if [[ -z ${yamlcpp_DIR} ]]; then
+  export yamlcpp_DIR=$HOME/yaml-cpp/install
+  export PATH=${PATH}:${yamlcpp_DIR}/bin
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${yamlcpp_DIR}/lib
+  export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${yamlcpp_DIR}
+fi
+
 if [[ -z ${COB_HOME} ]]; then
   COB_HOME="$(dirname ${BASH_SOURCE[0]})"
   export COB_HOME="$(realpath ${COB_HOME})"
