@@ -1,30 +1,29 @@
-"""Example plotting script to be run inside the container"""
+"""Plotting data ntuplized by the umn/hgcroc branch of ldmx-sw
+using the ldmx-cob/decode.py configuration script"""
 
 import ROOT
 import sys
-
+import argparse
 # turn on batch mode so ROOT doesn't try to launch a graphical interface
 ROOT.gROOT.SetBatch(1)
 
-fn = sys.argv[1]
+parser = argparse.ArgumentParser(f'ldmx python3 {sys.argv[0]}',
+        description=sys.modules[__name__].__doc__)
 
-comment = f'run {fn}'
-if len(sys.argv) > 2 :
-  comment = ' '.join(sys.argv[2:])
+parser.add_argument('input_file',help='Data file to plot.')
+parser.add_argument('--comment',help='Comment to be used instead of data file name in plot titles.')
 
-# assume first command line argument is the file to plot
-rf = ROOT.TFile(fn)
+arg = parser.parse_args()
 
-# get the tree of data
+if arg.comment is None :
+    arg.comment = f'run {arg.input_file}'
+
+rf = ROOT.TFile(arg.input_file)
 tree = rf.Get('hgcroc/adc')
-
-# create a canvas to draw plots on
 c = ROOT.TCanvas()
 
-# draw what you want
+# adc by channel for link 1
 tree.Draw('adc:channel','link==1','colz')
 ROOT.gPad.GetPrimitive("htemp").SetTitle(f'{comment}, link 1')
-
-# print
 c.SaveAs('link1_pedestals_by_channel_'+fn.replace('root','pdf'))
 
