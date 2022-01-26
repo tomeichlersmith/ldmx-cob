@@ -24,6 +24,6 @@ c = ROOT.TCanvas()
 
 # adc by channel for link 1
 tree.Draw('adc:channel','link==1','colz')
-ROOT.gPad.GetPrimitive("htemp").SetTitle(f'{comment}, link 1')
-c.SaveAs('link1_pedestals_by_channel_'+fn.replace('root','pdf'))
+ROOT.gPad.GetPrimitive("htemp").SetTitle(f'{arg.comment}, link 1')
+c.SaveAs('link1_pedestals_by_channel_'+arg.input_file.replace('root','pdf'))
 

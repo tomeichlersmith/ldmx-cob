@@ -16,7 +16,7 @@ fi
 if [[ -z ${yamlcpp_DIR} ]]; then
   export yamlcpp_DIR=$HOME/yaml-cpp/install
   export PATH=${PATH}:${yamlcpp_DIR}/bin
-  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${yamlcpp_DIR}/lib
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${yamlcpp_DIR}/lib64
   export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${yamlcpp_DIR}
 fi
 
