@@ -17,7 +17,7 @@ cd cob
 wget http://www.slac.stanford.edu/projects/CTK/SDK/rce-sdk-V3.4.1.tar.gz
 tar xzvf rce-sdk-V3.4.1.tar.gz
 ln -s V3.4.1 sdk
-tar xzvf /home/eichl008/ldmx-daq-pflib-v1.0.tar.gz
+tar xzvf /home/eichl008/ldmx-daq-pflib-v2.0.tar.gz
 ln -s ldmx-daq-pflib-v1.0 ldmx-daq
 ```
 
