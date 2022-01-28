@@ -1,23 +1,24 @@
 # reconstruction of parameter values that are different between the PDF
 #  defaults and what was dumped from the chip on Jan 14, 2022
 
-Channel_.*:
+# all readout channels had Inputdac and Dacb zeroed out
+Channel_:
   Inputdac: 0
   Dacb: 0
 
-CM.*:
+CM:
   Inputdac: 0
   Dacb: 0
 
-CALIB.*:
+CALIB:
   Inputdac: 0
   Dacb: 0
 
-Reference_Voltage_.*:
+Reference_Voltage_:
   Inv_vref: 224
   Noinv_vref: 160
 
-Global_Analog_.*:
+Global_Analog_:
   ON_dac_trim: 0
   ON_conv: 0
   ON_pa: 0
