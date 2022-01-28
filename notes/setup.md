@@ -36,6 +36,15 @@ ldmx cmake -B build -S .
 cd build
 ldmx make -j2 install
 ```
+The software we use to configure the ROC uses a C++ yaml library to parse YAML files holding settings. Currently, the software assumes that this library is installed to `~/yaml-cpp/install`.
+```
+cd
+git clone https://github.com/jbeder/yaml-cpp.git
+cd yaml-cpp
+cmake -B build -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=install
+cd build
+make install
+```
 Compile and install ldmx-daq/software for using our Polarfire interaction library.
 ```
 source ~/ldmx/cob/env.sh
@@ -71,3 +80,5 @@ git pull # to update
 ```
 
 The current decoder makes the _hardcoded assumption_ that the FPGA ID is 5.
+
+## eudaq
