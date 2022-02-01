@@ -20,6 +20,8 @@ if arg.comment is None :
 
 rf = ROOT.TFile(arg.input_file)
 tree = rf.Get('hgcroc/adc')
+
+# print histograms
 c = ROOT.TCanvas()
 
 # adc by channel for link 1
@@ -27,3 +29,6 @@ tree.Draw('adc:channel','link==1','colz')
 ROOT.gPad.GetPrimitive("htemp").SetTitle(f'{arg.comment}, link 1')
 c.SaveAs('link1_pedestals_by_channel_'+arg.input_file.replace('root','pdf'))
 
+for ch in [13,14,27,28,29,30] :
+    tree.Draw('adc:i_sample',f'link==1&&channel=={ch}','colz')
+    c.SaveAs(f'link1_time_samples_{ch}_{arg.input_file.replace("root","pdf")}')

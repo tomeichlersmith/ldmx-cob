@@ -23,8 +23,8 @@ for entry in tree :
     if entry.raw_id not in pedestal_table :
         pedestal_table[entry.raw_id] = [0., 0]
 
-    pedestal_table[entry.raw_id][0] += sum(entry.raw_adc)
-    pedestal_table[entry.raw_id][1] += len(entry.raw_adc)
+    pedestal_table[entry.raw_id][0] += entry.raw_adc
+    pedestal_table[entry.raw_id][1] += 1
 
 # print to a CSV
 with open(arg.output,'w') as f :
