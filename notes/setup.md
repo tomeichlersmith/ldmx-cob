@@ -82,3 +82,12 @@ git pull # to update
 The current decoder makes the _hardcoded assumption_ that the FPGA ID is 5.
 
 ## eudaq
+```
+cd
+git clone https://github.com/eudaq/eudaq.git
+cd eudaq
+mkdir build
+cd build
+cmake ..
+make install
+```
