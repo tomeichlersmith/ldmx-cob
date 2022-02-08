@@ -115,3 +115,10 @@ will be how the data is decoded within ldmx-sw, so it is a good debugging tool.
 ```
 raw2txt <file.raw>
 ```
+
+## Misc
+
+- `ROC.HARD_RESET` command sets the HGC ROC back to its power-on default parameters. If this command is issued, any ROC parameters that were updated need to be re-loaded.
+- `DAQ.HARD_RESET` forcefully clears the event buffers as if a run wasn't started
+- `ELINKS.SPY` should show the "idle" pattern (ac cc cc cc repeated) when the link is behaving correctly
+- `L1APARAMS`: delay should be 15 and the length should be 40, changing the length breaks any decoding code that needs to know the maximum packet length
