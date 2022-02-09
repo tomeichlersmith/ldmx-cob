@@ -17,8 +17,10 @@ cd cob
 wget http://www.slac.stanford.edu/projects/CTK/SDK/rce-sdk-V3.4.1.tar.gz
 tar xzvf rce-sdk-V3.4.1.tar.gz
 ln -s V3.4.1 sdk
-tar xzvf /home/eichl008/ldmx-daq-pflib-v3.0.tar.gz
-ln -s ldmx-daq-pflib-v3.0 ldmx-daq
+git clone --recursive git@github.com:LDMX-Software/ldmx-tb-online.git daq
+cd daq
+git checkout tom/polarfire-lib-dev
+git submodule update --init
 ```
 
 #### Compiling
@@ -48,7 +50,7 @@ make install
 Compile and install ldmx-daq/software for using our Polarfire interaction library.
 ```
 source ~/ldmx/cob/env.sh
-cd ~/ldmx/cob/ldmx-daq/software
+cd ~/ldmx/cob/daq/software
 cmake -B build -S .
 cd build
 make -j2 install
@@ -82,6 +84,7 @@ git pull # to update
 The current decoder makes the _hardcoded assumption_ that the FPGA ID is 5.
 
 ## eudaq
+
 ```
 cd
 git clone https://github.com/eudaq/eudaq.git

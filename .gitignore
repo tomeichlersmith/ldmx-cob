@@ -4,7 +4,7 @@ cshrc
 *.txt
 *.raw
 *.csv
-ldmx-daq**
+daq**
 login
 rce-sdk-V3.4.1.tar.gz
 ArchLinuxARM-zedboard-latest.tar.gz
