@@ -1,3 +1,5 @@
+# Overridden by notes in LDMX-Software/pflib
+
 # pflib Notes
 
 Short notes on using PolarFire configuration Library.
