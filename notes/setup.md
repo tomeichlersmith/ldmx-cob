@@ -17,10 +17,7 @@ cd cob
 wget http://www.slac.stanford.edu/projects/CTK/SDK/rce-sdk-V3.4.1.tar.gz
 tar xzvf rce-sdk-V3.4.1.tar.gz
 ln -s V3.4.1 sdk
-git clone --recursive git@github.com:LDMX-Software/ldmx-tb-online.git daq
-cd daq
-git checkout tom/polarfire-lib-dev
-git submodule update --init
+git clone --recursive git@github.com:LDMX-Software/pflib.git
 ```
 
 #### Compiling
@@ -47,11 +44,11 @@ cmake -B build -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=install
 cd build
 make install
 ```
-Compile and install ldmx-daq/software for using our Polarfire interaction library.
+Compile and install pflib.
 ```
 source ~/ldmx/cob/env.sh
-cd ~/ldmx/cob/daq/software
-cmake -B build -S .
+cd ~/ldmx/pflib
+cmake -B build -S . -DCMAKE_INSTALL_PREFIX=install
 cd build
 make -j2 install
 ```
@@ -93,4 +90,16 @@ mkdir build
 cd build
 cmake ..
 make install
+```
+
+## ldmx-tb-online
+
+```
+cd ~/ldmx/cob
+git clone git@github.com:ldmx-software/ldmx-tb-online.git daq
+# switch to desired branch
+cd daq/software
+cmake -B build -S .
+cd build
+make -j2 install
 ```

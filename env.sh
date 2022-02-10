@@ -20,10 +20,18 @@ if [[ -z ${yamlcpp_DIR} ]]; then
   export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${yamlcpp_DIR}
 fi
 
+if [[ -z ${pflib_DIR} ]]; then
+  export pflib_DIR=$HOME/ldmx/pflib/install
+  export PATH=${PATH}:${pflib_DIR}/bin
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${pflib_DIR}/lib
+  export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${pflib_DIR}
+  export PFTOOLRC=$HOME/ldmx/pflib/umn.pftoolrc
+fi
+
 if [[ -z ${COB_HOME} ]]; then
   COB_HOME="$(dirname ${BASH_SOURCE[0]})"
   export COB_HOME="$(realpath ${COB_HOME})"
-  # add ldmx-daq/software install directories to the env variables
+  # add daq/software install directories to the env variables
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/daq/software/install/lib
   export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/daq/software/install/lib
   export PATH=${PATH}:${COB_HOME}/daq/software/install/bin
