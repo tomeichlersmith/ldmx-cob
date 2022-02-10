@@ -24,9 +24,18 @@ The branch of ldmx-sw is called `umn/hgcroc`.
 ```
 cd ldmx-sw
 git fetch
+<<<<<<< HEAD
 git checkout umn/hgcroc
 cd Hcal
 git checkout umn/hgcroc
+=======
+git checkout umn/hgcroc # first time
+git pull # to update
+cd Hcal
+git fetch
+git checkout umn/hgcroc # first time
+git pull # to update
+>>>>>>> main
 ```
 
 The current decoder makes the _hardcoded assumption_ that the FPGA ID is 5.
@@ -35,12 +44,20 @@ The current decoder makes the _hardcoded assumption_ that the FPGA ID is 5.
 After generating new data using the pftool (or however).
 
 #### Pedestal Run
+<<<<<<< HEAD
 1. Decode `ldmx fire decode.py --num_samples <N> <file>.raw`
+=======
+1. Decode `ldmx fire decode.py <file>.raw`
+>>>>>>> main
 2. Check if pedestals look good `ldmx python3 plot.py adc_<file>.root`
 3. If you want, make a pedestal table: `ldmx python3 gen_pedestals.py adc_<file>.root --output <name>.csv`
 
 #### Other Runs
+<<<<<<< HEAD
 1. Decode with pedestals `ldmx fire decode.py --num_samples <N> --pedestals <name>.csv <file>.raw`
+=======
+1. Decode with pedestals `ldmx fire decode.py --pedestals <name>.csv <file>.raw`
+>>>>>>> main
 2. Plot: `ldmx python3 plot.py adc_<file>.root`
 
 

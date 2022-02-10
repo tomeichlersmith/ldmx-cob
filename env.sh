@@ -7,6 +7,19 @@ if [[ -z ${ROGUE_DIR} ]]; then
   source /opt/rogue/setup_rogue.sh || return $?
 fi
 
+if [[ -z ${EUDAQ_DIR} ]]; then
+  export EUDAQ_DIR=$HOME/eudaq
+  export PATH=${PATH}:${EUDAQ_DIR}/bin
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${EUDAQ_DIR}/lib
+fi
+
+if [[ -z ${yamlcpp_DIR} ]]; then
+  export yamlcpp_DIR=$HOME/yaml-cpp/install
+  export PATH=${PATH}:${yamlcpp_DIR}/bin
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${yamlcpp_DIR}/lib
+  export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${yamlcpp_DIR}
+fi
+
 if [[ -z ${COB_HOME} ]]; then
   COB_HOME="$(dirname ${BASH_SOURCE[0]})"
   export COB_HOME="$(realpath ${COB_HOME})"
@@ -34,7 +47,7 @@ export PS1="\[$(tput setaf 5)\][${tag}]\[$(tput sgr0)\] ${PS1}"
 unset tag
 
 reboot_cob_shelf() {
-  ssh root@${shmm_ip} "clia deactivate ${cob_shelf} && sleep 5 && clia activate ${cob_shelf}"
+  ssh root@${shmm_ip} "clia deactivate board ${cob_shelf} && sleep 5 && clia activate board ${cob_shelf}"
 }
 
 raw2txt() {
