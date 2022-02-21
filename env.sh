@@ -7,6 +7,10 @@ if [[ -z ${ROGUE_DIR} ]]; then
   source /opt/rogue/setup_rogue.sh || return $?
 fi
 
+if [[ ":$LD_LIBRARY_PATH:" != *":/opt/cactus/lib:"* ]]; then
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/cactus/lib
+fi
+
 if [[ -z ${EUDAQ_DIR} ]]; then
   export EUDAQ_DIR=$HOME/eudaq
   export PATH=${PATH}:${EUDAQ_DIR}/bin
