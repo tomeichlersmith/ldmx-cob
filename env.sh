@@ -11,6 +11,11 @@ if [[ ":$LD_LIBRARY_PATH:" != *":/opt/cactus/lib:"* ]]; then
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/cactus/lib
 fi
 
+if [[ -z ${FiberTrackerDAQ_DIR} ]]; then
+  export FiberTrackerDAQ_DIR=/home/eichl008/FiberTrackerDAQ
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${FiberTrackerDAQ_DIR}/lib:${FiberTrackerDAQ_DIR}/dip-5.7.0/lib64
+fi
+
 if [[ -z ${EUDAQ_DIR} ]]; then
   export EUDAQ_DIR=$HOME/eudaq
   export PATH=${PATH}:${EUDAQ_DIR}/bin
