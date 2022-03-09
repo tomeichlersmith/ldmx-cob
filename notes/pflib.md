@@ -1,4 +1,4 @@
-# Overridden by notes in LDMX-Software/pflib
+# Overridden by notes in [LDMX-Software/pflib](https://github.com/LDMX-Software/pflib)
 
 # pflib Notes
 
