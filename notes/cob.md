@@ -87,6 +87,9 @@ Watch Boot of COB component via minicom (either wired or wireless) and interrupt
 - Reset to default environment: `env default -a`
 - Set boot mode to nfs: `setenv modeboot nfsboot`
 - Persist boot delay: `setenv bootdelay`
+- (for DTM): Change command to use differently named firmware file:
+  - `setenv nfsfpga 'nfs 0x1000000 ${rootpath}/boot/fpga.bit.dtm && fpga loadb 0 0x1000000 ${filesize}'` 
+  - The only change should be changing the bit file name from `fpga.bit` to `fpga.bit.dtm`
 - Save environment: `saveenv`
 - Restart component: `reset`
 
