@@ -77,6 +77,9 @@ HOST=1/13/<dpm>/<rce>
 
 The shelf manager does not have this environment variable.
 
+Another option is to run `sysinfo` which should print the RCE ID on the COB components
+and is not available on the shelf manager.
+
 ## Changing COB component to boot from NFS
 DHCPD configuration
 - Make sure `root-path` points to full path of root direcotry for that COB component on cmslab0

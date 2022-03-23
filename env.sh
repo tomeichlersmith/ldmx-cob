@@ -37,13 +37,14 @@ if [[ -z ${pflib_DIR} ]]; then
   export PFTOOLRC=$HOME/ldmx/pflib/umn.pftoolrc
 fi
 
+if [[ ":$LD_LIBRARY_PATH:" != *":$HOME/ldmx/tb-online/install/lib:"* ]]; then
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$HOME/ldmx/tb-online/install/lib
+  export PATH=${PATH}:$HOME/ldmx/tb-online/install/bin
+fi
+
 if [[ -z ${COB_HOME} ]]; then
   COB_HOME="$(dirname ${BASH_SOURCE[0]})"
   export COB_HOME="$(realpath ${COB_HOME})"
-  # add daq/software install directories to the env variables
-  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COB_HOME}/daq/software/install/lib
-  export PYTHONPATH=${PYTHONPATH}:${COB_HOME}/daq/software/install/lib
-  export PATH=${PATH}:${COB_HOME}/daq/software/install/bin
   # add [cob] tag to shell prompt
   export PS1="\[$(tput setaf 5)\][cob]\[$(tput sgr0)\] ${PS1}"
   # if SDK exists here, source its environment
