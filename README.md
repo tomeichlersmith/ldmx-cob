@@ -2,6 +2,8 @@
 
 Notes and helper scripts for working with LDMX COBs.
 
+**Note**: The decoding script has been moved to the [ldmx-tb-online/near-offline directory](https://github.com/LDMX-Software/ldmx-tb-online).
+
 - [setup](notes/setup.md) - first time getting started on cmslab1
 - [workflow](notes/workflow.md) - data generation, decoding, and analysis commands
 - [cob](notes/cob.md) - general notes on setting up COB at UMN
