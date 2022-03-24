@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(f'ldmx fire {sys.argv[0]}')
 parser.add_argument('input_file')
 parser.add_argument('--pause',action='store_true')
 parser.add_argument('--max_events',default=100,type=int)
-parser.add_argument('--pedestals',default='NO_PEDESTALS',type=str)
+parser.add_argument('--pedestals',default=None,type=str)
 
 arg = parser.parse_args()
 
@@ -22,7 +22,7 @@ import LDMX.Hcal.hgcrocFormat as hcal_format
 import LDMX.Hcal.digi as hcal_digi
 import LDMX.Hcal.HcalGeometry
 import LDMX.Hcal.hcal_hardcoded_conditions
-from LDMX.DQM import umn
+from LDMX.DQM import dqm
 from LDMX.Packing import rawio
 
 import os
@@ -42,10 +42,10 @@ p.histogramFile = f'adc_{base_name}.root'
 p.sequence = [ 
         hcal_format.HcalRawDecoder(
             input_file = arg.input_file,
-            output_name = 'UMNChipSettingsTestDigis'
+            output_name = 'ChipSettingsTestDigis'
             ),
-        umn.TestHgcRoc(
-            input_name = 'UMNChipSettingsTestDigis',
+        dqm.NtuplizeHgcrocDigiCollection(
+            input_name = 'ChipSettingsTestDigis',
             pedestal_table = arg.pedestals
             )
         ]
