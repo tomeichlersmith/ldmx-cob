@@ -20,6 +20,7 @@ On the first time connecting to `cmslab1`, make sure the interactive notebook an
 python3 -m pip install --user --upgrade wheel
 python3 -m pip install --user --upgrade notebook jupyterlab uproot pandas
 ```
+
 ### Outline of Setup Commands
 Summarized from [a blog post](https://medium.com/@apbetahouse45/how-to-run-jupyter-notebooks-on-remote-server-part-1-ssh-a2be0232c533).
 1. Connect to cmslab1 with a specific port number (run from your laptop): `ssh -L 1234:localhost:1234 cmslab1`
@@ -35,6 +36,9 @@ Host cmslab1 :
   HostName cmslab1.spa.umn.edu
   LocalForward 1234 localhost:1234
 ```
+
+#### Jupyter Lab
+`jupyter lab` can be accessed the same way except its more complicated to change the port it displays to, so it is easiest to just use its default port `8888` and make sure that port is open when you `ssh`.
 
 ## SLAC RCE SDK
 We use the [SLAC RCE Software Development Kit (SDK)](https://confluence.slac.stanford.edu/display/RPTUSER/SDK+Download+and+Installation) a lot. 
