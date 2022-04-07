@@ -38,7 +38,7 @@ Host cmslab1 :
 ```
 
 #### Jupyter Lab
-`jupyter lab` can be accessed the same way except its more complicated to change the port it displays to, so it is easiest to just use its default port `8888` and make sure that port is open when you `ssh`.
+[`jupyter lab`](https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html) can be accessed the same way except its more complicated to change the port it displays to, so it is easiest to just use its default port `8888` and make sure that port is open when you `ssh`.
 
 ## SLAC RCE SDK
 We use the [SLAC RCE Software Development Kit (SDK)](https://confluence.slac.stanford.edu/display/RPTUSER/SDK+Download+and+Installation) a lot. 
