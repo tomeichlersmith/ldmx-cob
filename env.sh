@@ -37,9 +37,9 @@ if [[ -z ${pflib_DIR} ]]; then
   export PFTOOLRC=$HOME/ldmx/pflib/umn.pftoolrc
 fi
 
-if [[ ":$LD_LIBRARY_PATH:" != *":$HOME/ldmx/tb-online/install/lib:"* ]]; then
-  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$HOME/ldmx/tb-online/install/lib
-  export PATH=${PATH}:$HOME/ldmx/tb-online/install/bin
+if [[ ":$LD_LIBRARY_PATH:" != *":$HOME/ldmx/tb-online/install/software/lib:"* ]]; then
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$HOME/ldmx/tb-online/software/install/lib
+  export PATH=${PATH}:$HOME/ldmx/tb-online/software/install/bin
 fi
 
 if [[ -z ${COB_HOME} ]]; then
