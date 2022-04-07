@@ -19,7 +19,7 @@ if arg.comment is None :
     arg.comment = f'run {arg.input_file}'
 
 rf = ROOT.TFile(arg.input_file)
-tree = rf.Get('hgcroc/adc')
+tree = rf.Get('ntuplizehgcroc/hgcroc')
 
 # print histograms
 c = ROOT.TCanvas()
