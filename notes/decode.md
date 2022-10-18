@@ -15,11 +15,14 @@ into an easier-to-analyze form.
 ## Start Up
 I needed to add some stuff to ldmx-sw in order to match our needs,
 so you will need to re-compile ldmx-sw with my changes.
+These changes have been merged into ldmx-sw:trunk, so you just
+need to make sure to be on a more recent version of it.
 
 ```
 cd ldmx-sw
 git fetch
-git checkout umn/hgcroc
+git checkout trunk
+git pull
 git submodule update
 source scripts/ldmx-env.sh
 ldmx clean src
